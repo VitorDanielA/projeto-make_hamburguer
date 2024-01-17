@@ -2,7 +2,7 @@
     <div class="about">
         <h1 class="title">Gerenciar Pedidos: </h1>
         <div class="table-wrapper">
-            <table>
+            <table class="my-5">
                 <thead>
                     <tr>
                         <th>ID:</th>
@@ -14,82 +14,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Madson</td>
-                        <td>Australiano</td>
-                        <td>Bovina</td>
+                    <tr v-for="pedidos in hamburguers" :key="pedidos.id">
+                        <td>{{ pedidos.id }}</td>
+                        <td>{{ pedidos.nomeCliente }}</td>
+                        <td>{{ pedidos.pao }}</td>
+                        <td>{{ pedidos.carne }}</td>
                         <td class="lista-opcionais">
                             <ul>
-                                <li>Salame</li>
-                                <li>Alface</li>
+                                <li v-for="(adicional, index) in pedidos.adicionais" :key="index">
+                                    {{ adicional }}
+                                </li>
                             </ul>
                         </td>
                         <td class="td-inputs">
-                            <select name="" id="" class="select-status">
-                                <option value="">Pedido Aceito</option>
-                                <option value="">Em Produção</option>
-                                <option value="">Saiu Para Entrega</option>
-                                <option value="">Pedido Entregue</option>
-                            </select>
-                            <button class="btn-cancelar">Cancelar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Raul</td>
-                        <td>Integral</td>
-                        <td>Frango</td>
-                        <td class="lista-opcionais">
-                            <ul>
-                                <li>Pepino</li>
-                                <li>Queijo</li>
-                            </ul>
-                        </td>
-                        <td class="td-inputs">
-                            <select name="" id="" class="select-status">
-                                <option value="">Pedido Aceito</option>
-                                <option value="">Em Produção</option>
-                                <option value="">Saiu Para Entrega</option>
-                                <option value="">Pedido Entregue</option>
-                            </select>
-                            <button class="btn-cancelar">Cancelar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>João</td>
-                        <td>Brioche</td>
-                        <td>Porco</td>
-                        <td class="lista-opcionais">
-                            <ul>
-                                <li>Cebola</li>
-                                <li>Tomate</li>
-                            </ul>
-                        </td>
-                        <td class="td-inputs">
-                            <select name="" id="" class="select-status">
-                                <option value="">Pedido Aceito</option>
-                                <option value="">Em Produção</option>
-                                <option value="">Saiu Para Entrega</option>
-                                <option value="">Pedido Entregue</option>
-                            </select>
-                            <button class="btn-cancelar">Cancelar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Vitor</td>
-                        <td>Tradicional</td>
-                        <td>Cordeiro</td>
-                        <td class="lista-opcionais">
-                            <ul>
-                                <li>Salame</li>
-                                <li>Queijo</li>
-                            </ul>
-                        </td>
-                        <td class="td-inputs">
-                            <select name="" id="" class="select-status">
+                            <select class="select-status">
                                 <option value="">Pedido Aceito</option>
                                 <option value="">Em Produção</option>
                                 <option value="">Saiu Para Entrega</option>
@@ -107,21 +45,39 @@
 <script>
 export default {
     name: 'About',
+    data(){
+        return{
+            hamburguers: []
+        }
+    },
+    methods: {
+        async buscarPedidos(){
+            const req = await fetch("http://localhost:3000/hamburguer");
+            const data = await req.json();
+            this.hamburguers = data;
+            console.log(this.hamburguers)
+        }
+    },
+    mounted(){
+        this.buscarPedidos();
+    },
 }
 </script>
 
 <style scoped>
+
+    .about{
+        min-height: 600px;
+    }
     .title{
         padding-top: 40px;
         text-align: center;
         font-size: 50px;
     }
 
-    table {
-        border-collapse: collapse;
-        width: 80%;
-        margin: 20px auto;
-        margin-top: 50px;
+
+    .lista-opcionais{
+        font-size: 14px;
     }
 
     .table-wrapper {
@@ -142,8 +98,16 @@ export default {
         border-bottom: 3px solid #222;
     }
 
-    .lista-opcionais{
-        padding-left: 25px;
+    table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 20px auto;
+        margin-top: 50px;
+    }
+
+    ul{
+        margin: 0px;
+        padding-left: 16px;
     }
 
     .select-status{

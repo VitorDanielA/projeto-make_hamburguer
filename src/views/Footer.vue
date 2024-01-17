@@ -28,6 +28,7 @@ export default {
     @media screen and (max-width: 940px){
         footer{
             min-height: 280px;
+            
         }
     }
 </style>

@@ -5,14 +5,15 @@
         </div>
         <h1 class="make-burguer">Monte o seu Hambúrguer: </h1>
         <div class="formContainer">
-            <form @submit.prevent="salvarPedido">
+            <form @submit="salvarPedido">
                 <div class="container-input">
                     <label for="" class="titulo-label">Nome do Cliente:</label>
-                    <input type="text" name="" id="" class="size-box" v-model="hamburguer.nomeCliente">
+                    <input type="text" name="" id="" class="form-control" v-model="hamburguer.nomeCliente">
                 </div>
                 <div class="container-input">
                     <label for="" class="titulo-label" >Tipo de Pão:</label>
-                    <select class="size-box" v-model="hamburguer.pao">
+                    <select class="form-select" id="selectPao" v-model="hamburguer.pao">
+                        <option selected disabled>Selecione uma opção</option>
                         <option value="Brioche">Brioche</option>
                         <option value="Tradicional">Tradicional</option>
                         <option value="Australiano">Australiano</option>
@@ -21,7 +22,8 @@
                 </div>
                 <div class="container-input">
                     <label for="" class="titulo-label">Tipo de Carne:</label>
-                    <select class="size-box" v-model="hamburguer.carne">
+                    <select class="form-select" v-model="hamburguer.carne">
+                        <option selected disabled>Selecione uma opção</option>
                         <option value="Bovina">Bovina</option>
                         <option value="Frango">Frango</option>
                         <option value="Porco">Porco</option>
@@ -61,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn-form" @click="salvarPedido"> Crie o seu hambúrguer!</button> 
+                <button type="button" class="btn-form me-5" @click="salvarPedido"> Crie o seu hambúrguer!</button> 
             </form>
         </div>
     </div>
@@ -74,19 +76,41 @@ export default {
         return{
             hamburguer: {
                 nomeCliente: "",
-                pao: null,
-                carne: null,
+                pao: "Selecione uma opção",
+                carne: "Selecione uma opção",
                 adicionais: []
             }
         }
     },
     methods:{
-        salvarPedido(){
-            this.$hamburguerObjeto = this.hamburguer;
-        }
+        async salvarPedido(e){
+            e.preventDefault();
+            
+            const data = {
+                nomeCliente: this.hamburguer.nomeCliente,
+                pao: this.hamburguer.pao,
+                carne: this.hamburguer.carne,
+                adicionais: Array.from(this.hamburguer.adicionais)
+            }
+
+            const dataJson = JSON.stringify(data);
+
+            const req = await fetch("http://localhost:3000/hamburguer", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: dataJson
+            })
+
+            const res = await req.json();
+
+            this.hamburguer.nomeCliente = "";
+            this.hamburguer.pao = "";
+            this.hamburguer.carne = "";
+            this.hamburguer.adicionais = "";
+        },
     }
 }
-
+import 'bootstrap/dist/css/bootstrap.css';
 </script>
 
 <style scoped>
@@ -122,7 +146,7 @@ export default {
 
     .formContainer form{
         width: 300px;
-        height: 450px;
+        height: 500px;
     }
 
     .container-input{
@@ -152,10 +176,7 @@ export default {
         width: 20px;
     }
 
-    .size-box{
-        height: 30px;
-        padding-left: 10px;
-    }
+    
 
     .btn-form{
         width: 100%;

@@ -1,0 +1,61 @@
+{
+  "hamburguer": [
+    {
+      "id": "3989",
+      "nomeCliente": "Vitor",
+      "pao": "Brioche",
+      "carne": "Frango",
+      "adicionais": [
+        "Salame",
+        "Queijo",
+        "Tomate"
+      ]
+    },
+    {
+      "id": "0685",
+      "nomeCliente": "Madson",
+      "pao": "Australiano",
+      "carne": "Porco",
+      "adicionais": [
+        "Salame",
+        "Queijo",
+        "Tomate",
+        "Pepino",
+        "Cebola",
+        "Alface"
+      ]
+    },
+    {
+      "id": "c758",
+      "nomeCliente": "Raul",
+      "pao": "Integral",
+      "carne": "Cordeiro",
+      "adicionais": [
+        "Pepino",
+        "Cebola",
+        "Queijo",
+        "Alface"
+      ]
+    },
+    {
+      "id": "913b",
+      "nomeCliente": "João",
+      "pao": "Tradicional",
+      "carne": "Bovina",
+      "adicionais": [
+        "Alface",
+        "Queijo",
+        "Pepino"
+      ]
+    },
+    {
+      "id": "6df2",
+      "nomeCliente": "Luan",
+      "pao": "Brioche",
+      "carne": "Bovina",
+      "adicionais": [
+        "Tomate"
+      ]
+    }
+  ]
+}

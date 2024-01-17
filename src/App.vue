@@ -16,16 +16,6 @@
     components: {
       NavBar,
       Footer
-    },
-    data(){
-      return{
-        hamburguer: {
-          nomeCliente: "",
-          pao: null,
-          carne: null,
-          adicionais: []
-        }
-      }
     }
   }
 </script>
