@@ -34,31 +34,31 @@
                     <label for="" class="titulo-label">Selecione os adicionais:</label>
                     <div class="checkbox-container">
                         <div>
-                            <input type="checkbox" v-model="hamburguer.adicionais" value="Salame">
+                            <input type="checkbox" v-model="hamburguer.adicionais" value="Salame" class="form-check-input me-2">
                             <span>Salame</span>
                         </div>
                         <div>
-                            <input type="checkbox" v-model="hamburguer.adicionais" value="Pepino">
+                            <input type="checkbox" v-model="hamburguer.adicionais" value="Pepino" class="form-check-input me-2">
                             <span>Pepino</span>
                         </div>
                     </div>
                     <div class="checkbox-container">
                         <div>
-                            <input type="checkbox" v-model="hamburguer.adicionais" value="Queijo">
+                            <input type="checkbox" v-model="hamburguer.adicionais" value="Queijo" class="form-check-input me-2">
                             <span>Queijo</span>
                         </div>
                         <div>
-                            <input type="checkbox" v-model="hamburguer.adicionais" value="Cebola">
+                            <input type="checkbox" v-model="hamburguer.adicionais" value="Cebola" class="form-check-input me-2">
                             <span>Cebola</span>
                         </div>
                     </div>
                     <div class="checkbox-container">
                         <div>
-                            <input type="checkbox" v-model="hamburguer.adicionais" value="Alface"> 
+                            <input type="checkbox" v-model="hamburguer.adicionais" value="Alface" class="form-check-input me-2"> 
                             <span>Alface</span>
                         </div>
                         <div>
-                            <input type="checkbox" v-model="hamburguer.adicionais" value="Tomate"> 
+                            <input type="checkbox" v-model="hamburguer.adicionais" value="Tomate" class="form-check-input me-2"> 
                             <span>Tomate</span>
                         </div>
                     </div>
@@ -91,25 +91,30 @@ export default {
         async salvarPedido(e){
             e.preventDefault();
 
-            if(this.hamburguer.nomeCliente && this.hamburguer.pao && this.hamburguer.carne){
-                const data = {
-                    nomeCliente: this.hamburguer.nomeCliente,
-                    pao: this.hamburguer.pao,
-                    carne: this.hamburguer.carne,
-                    adicionais: Array.from(this.hamburguer.adicionais)
+            try{
+                if(this.hamburguer.nomeCliente && this.hamburguer.pao && this.hamburguer.carne){
+
+                    const data = {
+                        nomeCliente: this.hamburguer.nomeCliente,
+                        pao: this.hamburguer.pao,
+                        carne: this.hamburguer.carne,
+                        adicionais: Array.from(this.hamburguer.adicionais)
+                    }
+
+                    const dataJson = JSON.stringify(data);
+
+                    const req = await fetch("https://jsonserver-rouge.vercel.app/hamburguer", {
+                        method: "POST",
+                        headers: {"Content-Type" : "application/json"},
+                        body: dataJson
+                    })
+
+                    this.statusPedido = true;
+
+                    const res = await req.json();
                 }
+            } catch(error){
 
-                const dataJson = JSON.stringify(data);
-
-                const req = await fetch("https://jsonserver-rouge.vercel.app/hamburguer", {
-                    method: "POST",
-                    headers: {"Content-Type" : "application/json"},
-                    body: dataJson
-                })
-
-                const res = await req.json();
-
-                this.statusPedido = true;
             }
 
             this.hamburguer.nomeCliente = "";
@@ -122,7 +127,7 @@ export default {
             setTimeout(() => {
                 this.mostrarAlerta = false;
                 this.statusPedido = false;
-            }, 2000);
+            }, 1500);
         },
 
         pedidoAceito(status){

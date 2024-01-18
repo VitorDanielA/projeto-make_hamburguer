@@ -60,18 +60,26 @@ export default {
             const data = await req.json();
             this.hamburguers = data;
         },
+
         async deletarPedido(id){
-            const req = await fetch(`https://jsonserver-rouge.vercel.app/hamburguer/${id}`, {
-                method: "DELETE"
-            });
+            try{
+                const req = await fetch(`https://jsonserver-rouge.vercel.app/hamburguer/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                    },
+                });
+                this.buscarPedidos();
 
-            const res = await req.json();
+                this.mostrarAlerta = true;
 
-            this.buscarPedidos();
-            this.mostrarAlerta = true;
-            setTimeout(() => {
-                this.mostrarAlerta = false;
-            }, 2000)
+                setTimeout(() => {
+                    this.mostrarAlerta = false;
+                }, 1500)
+            } catch (error){
+
+            }
+            
         }
     },
     mounted(){
