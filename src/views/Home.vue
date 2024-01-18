@@ -135,7 +135,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 <style scoped>
     .containerMain{
-        background-image: url('imgs/burger.jpg');
+        background-image: url('./../../public/imgs/burger.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
