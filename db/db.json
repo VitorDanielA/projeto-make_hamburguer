@@ -44,16 +44,6 @@
       ]
     },
     {
-      "id": "c28c",
-      "nomeCliente": "Matheus",
-      "pao": "Brioche",
-      "carne": "Bovina",
-      "adicionais": [
-        "Tomate",
-        "Salame"
-      ]
-    },
-    {
       "id": "8821",
       "nomeCliente": "Tarcísio",
       "pao": "Australiano",
@@ -61,6 +51,16 @@
       "adicionais": [
         "Salame",
         "Cebola"
+      ]
+    },
+    {
+      "id": "eb79",
+      "nomeCliente": "Carlos",
+      "pao": "Brioche",
+      "carne": "Bovina",
+      "adicionais": [
+        "Salame",
+        "Tomate"
       ]
     }
   ]

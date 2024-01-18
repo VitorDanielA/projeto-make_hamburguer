@@ -101,7 +101,7 @@ export default {
 
                 const dataJson = JSON.stringify(data);
 
-                const req = await fetch("http://localhost:3000/hamburguer", {
+                const req = await fetch("https://jsonserver-rouge.vercel.app/hamburguer", {
                     method: "POST",
                     headers: {"Content-Type" : "application/json"},
                     body: dataJson

@@ -56,12 +56,12 @@ export default {
     },
     methods: {
         async buscarPedidos(){
-            const req = await fetch("http://localhost:3000/hamburguer");
+            const req = await fetch("https://jsonserver-rouge.vercel.app/hamburguer");
             const data = await req.json();
             this.hamburguers = data;
         },
         async deletarPedido(id){
-            const req = await fetch(`http://localhost:3000/hamburguer/${id}`, {
+            const req = await fetch(`https://jsonserver-rouge.vercel.app/hamburguer/${id}`, {
                 method: "DELETE"
             });
 

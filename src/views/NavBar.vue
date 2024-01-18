@@ -2,7 +2,7 @@
     <div class="nav">
         <img :src="img" :alt="alt">
         <router-link to="/" class="link">Fazer Pedido</router-link>
-        <router-link to="/about" class="link">Pedidos</router-link>
+        <router-link to="/pedidos" class="link">Pedidos</router-link>
     </div>
 </template>
 
