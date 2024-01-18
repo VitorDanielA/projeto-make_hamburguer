@@ -12,20 +12,6 @@
       ]
     },
     {
-      "id": "0685",
-      "nomeCliente": "Madson",
-      "pao": "Australiano",
-      "carne": "Porco",
-      "adicionais": [
-        "Salame",
-        "Queijo",
-        "Tomate",
-        "Pepino",
-        "Cebola",
-        "Alface"
-      ]
-    },
-    {
       "id": "c758",
       "nomeCliente": "Raul",
       "pao": "Integral",
@@ -49,12 +35,33 @@
       ]
     },
     {
-      "id": "6df2",
-      "nomeCliente": "Luan",
+      "id": "dbb7",
+      "nomeCliente": "Madson",
+      "pao": "Australiano",
+      "carne": "Cordeiro",
+      "adicionais": [
+        "Salame",
+        "Queijo"
+      ]
+    },
+    {
+      "id": "c28c",
+      "nomeCliente": "Matheus",
       "pao": "Brioche",
       "carne": "Bovina",
       "adicionais": [
-        "Tomate"
+        "Tomate",
+        "Salame"
+      ]
+    },
+    {
+      "id": "8821",
+      "nomeCliente": "Tarcísio",
+      "pao": "Australiano",
+      "carne": "Bovina",
+      "adicionais": [
+        "Salame",
+        "Cebola"
       ]
     }
   ]

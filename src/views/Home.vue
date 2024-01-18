@@ -8,11 +8,11 @@
             <form @submit="salvarPedido">
                 <div class="container-input">
                     <label for="" class="titulo-label">Nome do Cliente:</label>
-                    <input type="text" name="" id="" class="form-control" v-model="hamburguer.nomeCliente">
+                    <input type="text" name="" id="" class="form-control" v-model="hamburguer.nomeCliente" required>
                 </div>
                 <div class="container-input">
                     <label for="" class="titulo-label" >Tipo de Pão:</label>
-                    <select class="form-select" id="selectPao" v-model="hamburguer.pao">
+                    <select class="form-select" id="selectPao" v-model="hamburguer.pao" required>
                         <option selected disabled>Selecione uma opção</option>
                         <option value="Brioche">Brioche</option>
                         <option value="Tradicional">Tradicional</option>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="container-input">
                     <label for="" class="titulo-label">Tipo de Carne:</label>
-                    <select class="form-select" v-model="hamburguer.carne">
+                    <select class="form-select" v-model="hamburguer.carne" required>
                         <option selected disabled>Selecione uma opção</option>
                         <option value="Bovina">Bovina</option>
                         <option value="Frango">Frango</option>
@@ -64,6 +64,9 @@
                     </div>
                 </div>
                 <button type="button" class="btn-form me-5" @click="salvarPedido"> Crie o seu hambúrguer!</button> 
+                <div class="alert my-2" role="alert" v-bind:class="pedidoAceito(this.statusPedido)" v-show= mostrarAlerta>
+                    {{ this.statusPedido ? "Pedido criado com sucesso" : "Faltam campos para serem preenchidos no pedido" }}
+                </div>
             </form>
         </div>
     </div>
@@ -79,35 +82,52 @@ export default {
                 pao: "Selecione uma opção",
                 carne: "Selecione uma opção",
                 adicionais: []
-            }
+            },
+            mostrarAlerta: false,
+            statusPedido: false
         }
     },
     methods:{
         async salvarPedido(e){
             e.preventDefault();
-            
-            const data = {
-                nomeCliente: this.hamburguer.nomeCliente,
-                pao: this.hamburguer.pao,
-                carne: this.hamburguer.carne,
-                adicionais: Array.from(this.hamburguer.adicionais)
+
+            if(this.hamburguer.nomeCliente && this.hamburguer.pao && this.hamburguer.carne){
+                const data = {
+                    nomeCliente: this.hamburguer.nomeCliente,
+                    pao: this.hamburguer.pao,
+                    carne: this.hamburguer.carne,
+                    adicionais: Array.from(this.hamburguer.adicionais)
+                }
+
+                const dataJson = JSON.stringify(data);
+
+                const req = await fetch("http://localhost:3000/hamburguer", {
+                    method: "POST",
+                    headers: {"Content-Type" : "application/json"},
+                    body: dataJson
+                })
+
+                const res = await req.json();
+
+                this.statusPedido = true;
             }
-
-            const dataJson = JSON.stringify(data);
-
-            const req = await fetch("http://localhost:3000/hamburguer", {
-                method: "POST",
-                headers: {"Content-Type" : "application/json"},
-                body: dataJson
-            })
-
-            const res = await req.json();
 
             this.hamburguer.nomeCliente = "";
             this.hamburguer.pao = "";
             this.hamburguer.carne = "";
-            this.hamburguer.adicionais = "";
+            this.hamburguer.adicionais = [];
+
+            this.mostrarAlerta = true;
+
+            setTimeout(() => {
+                this.mostrarAlerta = false;
+                this.statusPedido = false;
+            }, 2000);
         },
+
+        pedidoAceito(status){
+            return status == true ? 'alert-primary' : 'alert-warning';
+        }
     }
 }
 import 'bootstrap/dist/css/bootstrap.css';
@@ -146,7 +166,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
     .formContainer form{
         width: 300px;
-        height: 500px;
+        height: 580px;
     }
 
     .container-input{

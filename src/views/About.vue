@@ -1,8 +1,11 @@
 <template>
     <div class="about">
         <h1 class="title">Gerenciar Pedidos: </h1>
+        <div class="alert alert-warning container w-50" role="alert" v-show=mostrarAlerta>
+            Pedido deletado com sucesso!
+        </div>
         <div class="table-wrapper">
-            <table class="my-5">
+            <table class="my-2">
                 <thead>
                     <tr>
                         <th>ID:</th>
@@ -33,7 +36,7 @@
                                 <option value="">Saiu Para Entrega</option>
                                 <option value="">Pedido Entregue</option>
                             </select>
-                            <button class="btn-cancelar">Cancelar</button>
+                            <button class="btn-cancelar" @click="deletarPedido(pedidos.id)">Cancelar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -47,7 +50,8 @@ export default {
     name: 'About',
     data(){
         return{
-            hamburguers: []
+            hamburguers: [],
+            mostrarAlerta: false
         }
     },
     methods: {
@@ -55,7 +59,19 @@ export default {
             const req = await fetch("http://localhost:3000/hamburguer");
             const data = await req.json();
             this.hamburguers = data;
-            console.log(this.hamburguers)
+        },
+        async deletarPedido(id){
+            const req = await fetch(`http://localhost:3000/hamburguer/${id}`, {
+                method: "DELETE"
+            });
+
+            const res = await req.json();
+
+            this.buscarPedidos();
+            this.mostrarAlerta = true;
+            setTimeout(() => {
+                this.mostrarAlerta = false;
+            }, 2000)
         }
     },
     mounted(){
@@ -129,7 +145,7 @@ export default {
 
     .btn-cancelar:hover{
         background-color: #FCBA03;
-        color: #222;
+        color: #ffffff;
     }
 
     .td-inputs{
@@ -137,7 +153,7 @@ export default {
         justify-content: space-between;
     }
 
-    @media screen and (max-width: 696px) {
+    @media screen and (max-width: 749px) {
         th, td {
             display: block; 
             width: 100%; 
